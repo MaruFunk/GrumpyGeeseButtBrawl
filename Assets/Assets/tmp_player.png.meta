@@ -974,9 +974,9 @@ TextureImporter:
       name: tmp_player_41
       rect:
         serializedVersion: 2
-        x: 48
+        x: 51
         y: 96
-        width: 48
+        width: 45
         height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -995,10 +995,10 @@ TextureImporter:
       name: tmp_player_42
       rect:
         serializedVersion: 2
-        x: 96
-        y: 96
-        width: 48
-        height: 48
+        x: 107
+        y: 103
+        width: 20
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

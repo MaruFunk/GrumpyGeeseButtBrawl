@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1147952051987626428}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -182,7 +182,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRef: {fileID: 0}
-  speed: 0.5
+  speed: 0.1
+  playerChaseCooldown: 6
   spriteIdle: {fileID: -720196607, guid: 1f75ae8f14cab85479f377078cd0897a, type: 3}
   spriteMovement: {fileID: -720196607, guid: 1f75ae8f14cab85479f377078cd0897a, type: 3}
   mySpriteComponent: {fileID: 1147952051987626428}

@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
             mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
 
-        // transform.Translate(movenent * speed * Time.deltaTime, Space.World); // Hier bewegen wir das Object an welches das Script angehängt ist. movement ist unser Richtungs-Faktor und speed der multiplikator für die Geschwindigkeit.
-        myRigidbody.AddForce(movenent * speed, ForceMode.VelocityChange);
+       
+        myRigidbody.AddForce(movenent * speed, ForceMode.VelocityChange); // Hier bewegen wir das Object an welches das Script angehängt ist. movement ist unser Richtungs-Faktor und speed der multiplikator für die Geschwindigkeit.
     }
 }

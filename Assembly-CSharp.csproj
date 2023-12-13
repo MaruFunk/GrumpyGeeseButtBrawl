@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\AIGans.cs" />
     <Compile Include="Assets\PlayerController.cs" />
+    <Compile Include="Assets\AIFreund.cs" />
     <Compile Include="Assets\CameraFollow.cs" />
   </ItemGroup>
   <ItemGroup>
