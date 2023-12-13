@@ -69,20 +69,25 @@ public class PlayerController : MonoBehaviour
      */
     public void movePlayer()
     {
-        updateSprite();
-
         Vector3 movenent = new Vector3(move.x, 0f, move.y); // Hier erstellen und setzen eine Vector3 Variable, welche die Bewegungsrichtung im 3Dimensionalen Raum angibt.
 
-        if(move.x == 0 && move.y == 0 && myRigidbody.velocity == Vector3.zero)
+        if (move.x == 0 && move.y == 0)
         {
+            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
         }
         else if (move.x > 0)
         {
+            updateSprite();
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
         }
         else if (move.x < 0)
         {
+            updateSprite();
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else
+        {
+            updateSprite();
         }
 
        
