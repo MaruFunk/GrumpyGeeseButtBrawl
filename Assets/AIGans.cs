@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIChicken : MonoBehaviour
+public class AIGans: MonoBehaviour
 {
     public GameObject playerRef; // Spieler Referenz um ihn anzuchargen
     public float speed; // Gans geschwindigkeit
@@ -31,6 +31,7 @@ public class AIChicken : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         distance = Vector3.Distance(transform.position, playerRef.transform.position); // Die Distanz zum Spieler
         Vector3 direction = playerRef.transform.position - transform.position; // Die Richtung in welcher sich der Spieler befindet
         direction.Normalize();
@@ -65,7 +66,7 @@ public class AIChicken : MonoBehaviour
         {
             setCooldown(false); // Cooldown runterzählen oder zurücksetzen
             setRandomDirection(); // Zufällige Richtung bestimmen
-            myRigidbody.AddForce(0.2f * speed * randomDirection, ForceMode.VelocityChange);
+            myRigidbody.AddForce(0.3f * speed * randomDirection, ForceMode.VelocityChange);
         }
     }
 
@@ -93,5 +94,6 @@ public class AIChicken : MonoBehaviour
             randomDirectionTimer -= Time.deltaTime;
         }
     }
+    
 
 }

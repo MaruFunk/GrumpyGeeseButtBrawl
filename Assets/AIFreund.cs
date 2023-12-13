@@ -13,10 +13,15 @@ public class AIFreund : MonoBehaviour
 
     private float distance;
 
+    public float spriteFPS;
+    private float spriteFPSTimer = 0f;
+    private int spriteAnimationStep = 0;
     public Sprite spriteIdle;
-    public Sprite spriteMovement;
+    public Sprite spriteMovement1;
+    public Sprite spriteMovement2;
+    public Sprite spriteMovement3;
+    public Sprite spriteMovement4;
     public GameObject mySpriteComponent;
-
 
 
     Rigidbody myRigidbody;
@@ -30,6 +35,8 @@ public class AIFreund : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        updateSprite();
+
         distance = Vector3.Distance(transform.position, playerRef.transform.position); // Die Distanz zum Spieler
         Vector3 direction =  transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
         direction.Normalize();
@@ -37,23 +44,19 @@ public class AIFreund : MonoBehaviour
         // Sprite Anpassung basierend auf Bewegungsrichtung
         if (myRigidbody.velocity == Vector3.zero)
         {
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
-
         }
         else if (direction.x > 0)
         {
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
         else if (direction.x < 0)
         {
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
 
         if (distance <= 5)
         {
-            myRigidbody.AddForce(0.65f * speed * direction, ForceMode.VelocityChange);
+            myRigidbody.AddForce(0.75f * speed * direction, ForceMode.VelocityChange);
         }
         else if (distance <= 10)
         {
@@ -62,7 +65,7 @@ public class AIFreund : MonoBehaviour
         else // Ansosten Random Movement
         {
             setRandomDirection(); // Zufällige Richtung bestimmen
-            myRigidbody.AddForce(0.3f * speed * randomDirection, ForceMode.VelocityChange);
+            myRigidbody.AddForce(0.5f * speed * randomDirection, ForceMode.VelocityChange);
         }
 
     }
@@ -78,5 +81,39 @@ public class AIFreund : MonoBehaviour
         {
             randomDirectionTimer -= Time.deltaTime;
         }
+    }
+
+    private void updateSprite()
+    {
+        spriteFPSTimer += Time.deltaTime;
+
+        if (spriteFPSTimer >= spriteFPS)
+        {
+            switch (spriteAnimationStep)
+            {
+                case 3:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement4;
+                    spriteAnimationStep = 0;
+                    break;
+                case 2:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement3;
+                    spriteAnimationStep = 3;
+                    break;
+                case 1:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement2;
+                    spriteAnimationStep = 2;
+                    break;
+                case 0:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement1;
+                    spriteAnimationStep = 1;
+                    break;
+
+                default:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
+                    break;
+            }
+            spriteFPSTimer = 0f;
+        }
+
     }
 }

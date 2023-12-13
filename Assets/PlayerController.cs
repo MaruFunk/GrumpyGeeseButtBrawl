@@ -9,8 +9,14 @@ public class PlayerController : MonoBehaviour
     public float speed; // Enhält die Geschwindigkeit vom Spielercharakter
     private Vector2 move; // Entählt unsere bewegungsrichtung (theoretisch auch einen Geschwindigkeits-Multiplikator bei einem Analog-Stick z.b.)
 
+    public float spriteFPS;
+    private float spriteFPSTimer = 0f;
+    private int spriteAnimationStep = 0;
     public Sprite spriteIdle;
-    public Sprite spriteMovement;
+    public Sprite spriteMovement1;
+    public Sprite spriteMovement2;
+    public Sprite spriteMovement3;
+    public Sprite spriteMovement4;
     public GameObject mySpriteComponent;
 
 
@@ -27,6 +33,18 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context) 
     {
         move = context.ReadValue<Vector2>();
+    }
+
+    public void OnKick(InputAction.CallbackContext context)
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, 2f);
+        foreach (Collider target in targets)
+        {
+            if(target.tag == "Gans")
+            {
+                print("KICK!");
+            }
+        }
     }
 
     // Start is called before the first frame update
@@ -51,24 +69,57 @@ public class PlayerController : MonoBehaviour
      */
     public void movePlayer()
     {
+        updateSprite();
+
         Vector3 movenent = new Vector3(move.x, 0f, move.y); // Hier erstellen und setzen eine Vector3 Variable, welche die Bewegungsrichtung im 3Dimensionalen Raum angibt.
 
         if(move.x == 0 && move.y == 0 && myRigidbody.velocity == Vector3.zero)
         {
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
         }
         else if (move.x > 0)
         {
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
         else if (move.x < 0)
         {
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
 
        
         myRigidbody.AddForce(movenent * speed, ForceMode.VelocityChange); // Hier bewegen wir das Object an welches das Script angehängt ist. movement ist unser Richtungs-Faktor und speed der multiplikator für die Geschwindigkeit.
+    }
+
+    private void updateSprite()
+    {
+        spriteFPSTimer += Time.deltaTime;
+
+        if (spriteFPSTimer >= spriteFPS)
+        {
+            switch (spriteAnimationStep)
+            {
+                case 3:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement4;
+                    spriteAnimationStep = 0;
+                    break;
+                case 2:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement3;
+                    spriteAnimationStep = 3;
+                    break;
+                case 1:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement2;
+                    spriteAnimationStep = 2;
+                    break;
+                case 0:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement1;
+                    spriteAnimationStep = 1;
+                    break;
+
+                default:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
+                    break;
+            }
+            spriteFPSTimer = 0f;
+        }
+
     }
 }

@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4147562417674102599}
   m_Layer: 0
   m_Name: Gans
-  m_TagString: Untagged
+  m_TagString: Gans
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,6 +184,7 @@ MonoBehaviour:
   playerRef: {fileID: 0}
   speed: 0.1
   playerChaseCooldown: 6
+  playerChargeThreshold: 6
   spriteIdle: {fileID: -720196607, guid: 1f75ae8f14cab85479f377078cd0897a, type: 3}
   spriteMovement: {fileID: -720196607, guid: 1f75ae8f14cab85479f377078cd0897a, type: 3}
   mySpriteComponent: {fileID: 1147952051987626428}
