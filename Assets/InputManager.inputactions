@@ -13,15 +13,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Kick",
-                    "type": "Button",
-                    "id": "6fae42c8-ef3b-4325-a19b-c2dfe2bee310",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -48,9 +39,31 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "up",
+                    "id": "3a9deb1b-4230-415a-8da1-de66be55663e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "down",
                     "id": "6cc71785-dda7-492e-ab1f-7e538c5af989",
                     "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "333b8dfd-fbcc-4dfc-bfa0-fd5352efab8f",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -70,6 +83,17 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "left",
+                    "id": "3d8e12e9-3740-40de-96b4-04f4bfb786e4",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "right",
                     "id": "67d66077-67ba-44d1-bed9-c5aa9337d98a",
                     "path": "<Keyboard>/d",
@@ -81,15 +105,15 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "a7333cb1-f626-44f2-9aac-910f65f5ebc6",
-                    "path": "<Keyboard>/space",
+                    "name": "right",
+                    "id": "c51a908c-1a01-4ff4-8de2-169afba54c11",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Kick",
+                    "action": "Move",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 }
             ]
         }
