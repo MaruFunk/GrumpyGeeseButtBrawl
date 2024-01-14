@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147952051987626428}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
   m_LocalPosition: {x: 0, y: -0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7575814248195727600}
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
 --- !u!212 &1813720221242704046
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -720196607, guid: 1f75ae8f14cab85479f377078cd0897a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: afb604104910447dc9283bad62c87697, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -185,6 +185,10 @@ MonoBehaviour:
   speed: 0.1
   playerChaseCooldown: 6
   playerChargeThreshold: 6
-  spriteIdle: {fileID: -720196607, guid: 1f75ae8f14cab85479f377078cd0897a, type: 3}
-  spriteMovement: {fileID: -720196607, guid: 1f75ae8f14cab85479f377078cd0897a, type: 3}
+  spriteFPS: 0
+  spriteIdle: {fileID: 21300000, guid: 4fcf3edcf318a42c59c03ffa1e6f76fc, type: 3}
+  spriteMovement: {fileID: 21300000, guid: 4fcf3edcf318a42c59c03ffa1e6f76fc, type: 3}
+  spriteMovement2: {fileID: 21300000, guid: 2d7e2c22ce3344495ad44e4c8be249bd, type: 3}
+  spriteMovement3: {fileID: 21300000, guid: 03f208fb11a62447589ecc5b5770723f, type: 3}
+  spriteMovement4: {fileID: 21300000, guid: afb604104910447dc9283bad62c87697, type: 3}
   mySpriteComponent: {fileID: 1147952051987626428}

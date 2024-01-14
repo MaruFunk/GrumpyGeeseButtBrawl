@@ -59,6 +59,21 @@ public class AIGans: MonoBehaviour
             mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
 
+
+        //Startpunkt 
+
+        //1. Zufällige Bewegung Weg vom STartpunkt
+
+        // 50% chance auf 2. Zufällige
+
+        //3. bewegung zurück startpunkt
+
+        // Gans soll Zum spieler rennen wenn; spieler ist nah
+
+        // spieler verfolgen bis; soso und so weit weg vom Startpunkt
+
+        // zu weitz weg; zurück zum startpunkt
+
         // Wenn Spieler auf 10 Units rann kommt, dann l?uft die Gans auf den Spieler zu
         if ( distance <= playerChargeThreshold && playerChaseCooldownTimer <= 0)
         {
