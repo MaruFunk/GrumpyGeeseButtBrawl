@@ -16,8 +16,14 @@ public class AIGans: MonoBehaviour
 
     private float distance;
 
+    public float spriteFPS;
+    private float spriteFPSTimer = 0f;
+    private int spriteAnimationStep = 0;
     public Sprite spriteIdle;
     public Sprite spriteMovement;
+    public Sprite spriteMovement2;
+    public Sprite spriteMovement3;
+    public Sprite spriteMovement4;
     public GameObject mySpriteComponent;
 
     Rigidbody myRigidbody;
@@ -37,7 +43,7 @@ public class AIGans: MonoBehaviour
         direction.Normalize();
 
         // Sprite Anpassung basierend auf Bewegungsrichtung
-        if (myRigidbody.velocity == Vector3.zero) // Die kondition prüft ob es eine Eingabe bewegung gibt; Nur wenn ja:
+        if (myRigidbody.velocity == Vector3.zero) // Die kondition pr?ft ob es eine Eingabe bewegung gibt; Nur wenn ja:
         {
             mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
 
@@ -53,7 +59,7 @@ public class AIGans: MonoBehaviour
             mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
 
-        // Wenn Spieler auf 10 Units rann kommt, dann läuft die Gans auf den Spieler zu
+        // Wenn Spieler auf 10 Units rann kommt, dann l?uft die Gans auf den Spieler zu
         if ( distance <= playerChargeThreshold && playerChaseCooldownTimer <= 0)
         {
             myRigidbody.AddForce(direction * speed, ForceMode.VelocityChange);
@@ -64,8 +70,8 @@ public class AIGans: MonoBehaviour
         }
         else // Ansosten Random Movement bis Timer auf 0
         {
-            setCooldown(false); // Cooldown runterzählen oder zurücksetzen
-            setRandomDirection(); // Zufällige Richtung bestimmen
+            setCooldown(false); // Cooldown runterz?hlen oder zur?cksetzen
+            setRandomDirection(); // Zuf?llige Richtung bestimmen
             myRigidbody.AddForce(0.3f * speed * randomDirection, ForceMode.VelocityChange);
         }
     }
@@ -78,7 +84,7 @@ public class AIGans: MonoBehaviour
         }
         else // Ansosonsten:
         {
-            playerChaseCooldownTimer -= Time.deltaTime; // Läuft er weiter runter -> deltaTime: die Zeit die vergangen ist seit dem letzten Frame, also auch seit dem letzten runterzählen
+            playerChaseCooldownTimer -= Time.deltaTime; // L?uft er weiter runter -> deltaTime: die Zeit die vergangen ist seit dem letzten Frame, also auch seit dem letzten runterz?hlen
         }
     }
 
@@ -86,7 +92,7 @@ public class AIGans: MonoBehaviour
     {
         if (randomDirectionTimer <= 0)
         {
-            randomDirectionTimer = Random.Range(1f, 5f); // Setzt den Timer für die Zufällige Richtung auf einen Wert zwischen 0.5 und 3.5 (Sekunden)
+            randomDirectionTimer = Random.Range(1f, 5f); // Setzt den Timer f?r die Zuf?llige Richtung auf einen Wert zwischen 0.5 und 3.5 (Sekunden)
             randomDirection = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f));
         }
         else
@@ -94,6 +100,39 @@ public class AIGans: MonoBehaviour
             randomDirectionTimer -= Time.deltaTime;
         }
     }
-    
+
+    private void updateSprite()
+    {
+        spriteFPSTimer += Time.deltaTime;
+
+        if (spriteFPSTimer >= spriteFPS)
+        {
+            switch (spriteAnimationStep)
+            {
+                case 3:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement4;
+                    spriteAnimationStep = 0;
+                    break;
+                case 2:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement3;
+                    spriteAnimationStep = 3;
+                    break;
+                case 1:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement2;
+                    spriteAnimationStep = 2;
+                    break;
+                case 0:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
+                    spriteAnimationStep = 1;
+                    break;
+
+                default:
+                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
+                    break;
+            }
+            spriteFPSTimer = 0f;
+        }
+
+    }
 
 }
