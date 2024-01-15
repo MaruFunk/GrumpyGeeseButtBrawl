@@ -50,12 +50,12 @@ public class AIGans: MonoBehaviour
         }
         else if (direction.x > 0)
         {
-            mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
+            mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
             mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
         else if (direction.x < 0)
         {
-            mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
+            mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
             mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
 

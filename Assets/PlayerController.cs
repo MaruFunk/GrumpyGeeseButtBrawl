@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Sprite spriteMovement2;
     public Sprite spriteMovement3;
     public Sprite spriteMovement4;
+    public Sprite spriteKick;
     public GameObject mySpriteComponent;
 
 
@@ -33,18 +34,6 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context) 
     {
         move = context.ReadValue<Vector2>();
-    }
-
-    public void OnKick(InputAction.CallbackContext context)
-    {
-        Collider[] targets = Physics.OverlapSphere(transform.position, 2f);
-        foreach (Collider target in targets)
-        {
-            if(target.tag == "Gans")
-            {
-                print("KICK!");
-            }
-        }
     }
 
     // Start is called before the first frame update
@@ -73,58 +62,90 @@ public class PlayerController : MonoBehaviour
 
         if (move.x == 0 && move.y == 0)
         {
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
+            updateSprite(0);
+            // mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
         }
         else if (move.x > 0)
         {
-            updateSprite();
-            mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
+            updateSprite(1);
+            mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (move.x < 0)
         {
-            updateSprite();
-            mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
+            updateSprite(1);
+            mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
         }
         else
         {
-            updateSprite();
+            updateSprite(1);
         }
 
        
         myRigidbody.AddForce(movenent * speed, ForceMode.VelocityChange); // Hier bewegen wir das Object an welches das Script angehängt ist. movement ist unser Richtungs-Faktor und speed der multiplikator für die Geschwindigkeit.
     }
 
-    private void updateSprite()
+    private void updateSprite(int animationType)
     {
         spriteFPSTimer += Time.deltaTime;
 
+        if (animationType == 0)
+        {
+            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
+            spriteAnimationStep = 0;
+            spriteFPSTimer = 0f;
+        }
+
+        if (animationType == 2)
+        {
+            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteKick;
+            spriteAnimationStep = 0;
+            spriteFPSTimer = 0f;
+        }
+
         if (spriteFPSTimer >= spriteFPS)
         {
-            switch (spriteAnimationStep)
-            {
-                case 3:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement4;
-                    spriteAnimationStep = 0;
-                    break;
-                case 2:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement3;
-                    spriteAnimationStep = 3;
-                    break;
-                case 1:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement2;
-                    spriteAnimationStep = 2;
-                    break;
-                case 0:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement1;
-                    spriteAnimationStep = 1;
-                    break;
 
-                default:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
-                    break;
+            if (animationType == 1)
+            {
+                switch (spriteAnimationStep)
+                {
+                    case 3:
+                        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement4;
+                        spriteAnimationStep = 0;
+                        break;
+                    case 2:
+                        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement3;
+                        spriteAnimationStep = 3;
+                        break;
+                    case 1:
+                        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement2;
+                        spriteAnimationStep = 2;
+                        break;
+                    case 0:
+                        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement1;
+                        spriteAnimationStep = 1;
+                        break;
+
+                }
             }
             spriteFPSTimer = 0f;
         }
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Gans")
+        {
+            updateSprite(2);
+            print("Gans KICK!");
+
+        }
+
+        if (collision.gameObject.tag == "Freund")
+        {
+            updateSprite(2);
+            print("You kicked your friend, you win!");
+        }
     }
 }

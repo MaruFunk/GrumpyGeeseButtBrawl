@@ -6,12 +6,20 @@ public class AIFreund : MonoBehaviour
 {
 
     public GameObject playerRef;
+    public GameObject nordWand;
+    public GameObject suedWand;
+    public GameObject ostWand;
+    public GameObject westWand;
     public float speed;
 
     private float randomDirectionTimer;
-    private Vector3 randomDirection;
+    private Vector3 direction;
 
-    private float distance;
+    private float playerDistance;
+    private float nordWandZ;
+    private float suedWandZ;
+    private float ostWandX;
+    private float westWandX;
 
     public float spriteFPS;
     private float spriteFPSTimer = 0f;
@@ -30,6 +38,11 @@ public class AIFreund : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
+
+        nordWandZ = nordWand.transform.position.z;
+        suedWandZ = suedWand.transform.position.z;
+        ostWandX = ostWand.transform.position.x;
+        westWandX = westWand.transform.position.x;
     }
 
     // Update is called once per frame
@@ -37,9 +50,7 @@ public class AIFreund : MonoBehaviour
     {
         updateSprite();
 
-        distance = Vector3.Distance(transform.position, playerRef.transform.position); // Die Distanz zum Spieler
-        Vector3 direction =  transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
-        direction.Normalize();
+        playerDistance = Vector3.Distance(transform.position, playerRef.transform.position); // Die Distanz zum Spieler
 
         // Sprite Anpassung basierend auf Bewegungsrichtung
         if (myRigidbody.velocity == Vector3.zero)
@@ -54,20 +65,56 @@ public class AIFreund : MonoBehaviour
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
         }
 
-        if (distance <= 5)
+        // Freund Bewegungsverhalten
+        if (playerDistance <= 5) // wenn Spieler sehr Nah
         {
+            direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
+            direction.Normalize();
+            directAwayFromWall();
             myRigidbody.AddForce(0.75f * speed * direction, ForceMode.VelocityChange);
         }
-        else if (distance <= 10)
+        else if (playerDistance <= 10) // wenn Spiele Nah
         {
+            direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
+            direction.Normalize();
+            directAwayFromWall();
             myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
         }
         else // Ansosten Random Movement
         {
             setRandomDirection(); // Zufällige Richtung bestimmen
-            myRigidbody.AddForce(0.5f * speed * randomDirection, ForceMode.VelocityChange);
+            direction.Normalize();
+            directAwayFromWall();
+            myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
         }
 
+    }
+    
+    private void directAwayFromWall()
+    {
+        if (transform.position.z >= nordWandZ - 10)
+        {
+            direction.z = -1;
+
+        }
+
+        if (transform.position.z <= (suedWandZ + 10))
+        {
+            direction.z = 1;
+
+        }
+
+        if (transform.position.x >= (ostWandX - 10))
+        {
+            direction.x = -1;
+
+        }
+
+        if (transform.position.x <= (westWandX + 10))
+        {
+            direction.x = 1;
+
+        }
     }
 
     private void setRandomDirection()
@@ -75,7 +122,7 @@ public class AIFreund : MonoBehaviour
         if (randomDirectionTimer <= 0)
         {
             randomDirectionTimer = Random.Range(1f, 5f); // Setzt den Timer für die Zufällige Richtung auf einen Wert zwischen 0.5 und 3.5 (Sekunden)
-            randomDirection = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f));
+            direction = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f));
         }
         else
         {
