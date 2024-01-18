@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 3907176}
   - component: {fileID: 3907175}
   m_Layer: 0
-  m_Name: Wall04
+  m_Name: WallLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 58281663}
   - component: {fileID: 58281660}
   m_Layer: 0
-  m_Name: Wall01
+  m_Name: WallTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 538410222}
   - component: {fileID: 538410221}
   m_Layer: 0
-  m_Name: Wall02
+  m_Name: WallBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -797,13 +797,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: 0, y: 9, z: -10}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1409298344}
-  m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!1 &1230710001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +1003,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1827028910}
   smoothTime: 0.1
-  offset: {x: 0, y: -3.5, z: 5.5}
+  offset: {x: 0, y: 8, z: -3.5}
+  topLimiter: {fileID: 58281663}
+  topLimiterOffset: 8.5
+  bottomLimiter: {fileID: 538410220}
+  bottomLimiterOffset: -1
+  rightLimiter: {fileID: 1695620226}
+  rightLimiterOffset: 7.79
+  leftLimiter: {fileID: 3907174}
+  leftLimiterOffset: 7.79
 --- !u!4 &1409298344
 Transform:
   m_ObjectHideFlags: 0
@@ -1013,7 +1021,7 @@ Transform:
   m_GameObject: {fileID: 1409298342}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.99, y: -1.57, z: -10.72}
+  m_LocalPosition: {x: 1.32, y: 6.54, z: -31.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1323,7 +1331,7 @@ GameObject:
   - component: {fileID: 1695620228}
   - component: {fileID: 1695620227}
   m_Layer: 0
-  m_Name: Wall03
+  m_Name: WallRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
