@@ -65,27 +65,30 @@ public class AIFreund : MonoBehaviour
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
         }
 
-        // Freund Bewegungsverhalten
-        if (playerDistance <= 5) // wenn Spieler sehr Nah
+        if(Time.timeScale == 1)
         {
-            direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
-            direction.Normalize();
-            directAwayFromWall();
-            myRigidbody.AddForce(0.75f * speed * direction, ForceMode.VelocityChange);
-        }
-        else if (playerDistance <= 10) // wenn Spiele Nah
-        {
-            direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
-            direction.Normalize();
-            directAwayFromWall();
-            myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
-        }
-        else // Ansosten Random Movement
-        {
-            setRandomDirection(); // Zufällige Richtung bestimmen
-            direction.Normalize();
-            directAwayFromWall();
-            myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
+            // Freund Bewegungsverhalten
+            if (playerDistance <= 5) // wenn Spieler sehr Nah
+            {
+                direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
+                direction.Normalize();
+                directAwayFromWall();
+                myRigidbody.AddForce(0.75f * speed * direction, ForceMode.VelocityChange);
+            }
+            else if (playerDistance <= 10) // wenn Spiele Nah
+            {
+                direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
+                direction.Normalize();
+                directAwayFromWall();
+                myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
+            }
+            else // Ansosten Random Movement
+            {
+                setRandomDirection(); // Zufällige Richtung bestimmen
+                direction.Normalize();
+                directAwayFromWall();
+                myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
+            }
         }
 
     }
@@ -162,5 +165,11 @@ public class AIFreund : MonoBehaviour
             spriteFPSTimer = 0f;
         }
 
+    }
+
+    IEnumerator kicked()
+    {
+
+        yield return new WaitForSecondsRealtime(1f);
     }
 }
