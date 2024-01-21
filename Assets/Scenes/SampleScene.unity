@@ -1541,6 +1541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.15
+  kickForce: 20
   spriteFPS: 0.2
   spriteIdle: {fileID: 21300000, guid: 34a8cf6752dd4453ba090f0e69737546, type: 3}
   spriteMovement1: {fileID: 21300000, guid: ea5124727533d49e99745de90852aef6, type: 3}

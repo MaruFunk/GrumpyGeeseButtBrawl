@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public float speed; // Enhält die Geschwindigkeit vom Spielercharakter
     private Vector2 move; // Entählt unsere bewegungsrichtung (theoretisch auch einen Geschwindigkeits-Multiplikator bei einem Analog-Stick z.b.)
 
+    public float kickForce = 20f;
+    
     public float spriteFPS;
     private float spriteFPSTimer = 0f;
     private int spriteAnimationStep = 0;
@@ -140,12 +142,21 @@ public class PlayerController : MonoBehaviour
             updateSprite(2);
             print("Gans KICK!");
 
+            Vector3 kickDirection = (collision.gameObject.transform.position - transform.position);
+
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(kickForce * kickDirection, ForceMode.VelocityChange);
         }
 
         if (collision.gameObject.tag == "Freund")
         {
             updateSprite(2);
             print("You kicked your friend, you win!");
+
+            Vector3 kickDirection = (collision.gameObject.transform.position - transform.position);
+
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(kickForce * kickDirection, ForceMode.Impulse);
         }
+
+        
     }
 }
