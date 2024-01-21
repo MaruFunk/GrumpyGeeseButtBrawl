@@ -166,7 +166,6 @@ public class PlayerController : MonoBehaviour
             print("You kicked your friend, you win!");
 
 
-
             kickFriend(collision.gameObject);
         }
 
@@ -178,6 +177,8 @@ public class PlayerController : MonoBehaviour
         Vector3 kickDirection = (friend.transform.position - transform.position);
 
         friend.GetComponent<Rigidbody>().AddForce(kickForce * kickDirection, ForceMode.Impulse);
+
+        friend.GetComponent<AIFreund>().getKicked();
 
         friendKickCounter++;
 

@@ -45,7 +45,7 @@ public class IntroGameSequence : MonoBehaviour
         return true;
     }
 
-    IEnumerator Countdown()
+    public IEnumerator Countdown()
     {
 
         countdownRef.GetComponent<TMP_Text>().text = "3";
