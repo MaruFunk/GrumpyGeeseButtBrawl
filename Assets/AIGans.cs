@@ -42,52 +42,38 @@ public class AIGans: MonoBehaviour
         Vector3 direction = playerRef.transform.position - transform.position; // Die Richtung in welcher sich der Spieler befindet
         direction.Normalize();
 
+        updateSprite();
+
         // Sprite Anpassung basierend auf Bewegungsrichtung
-        if (myRigidbody.velocity == Vector3.zero) // Die kondition pr?ft ob es eine Eingabe bewegung gibt; Nur wenn ja:
+        if (myRigidbody.velocity == Vector3.zero)
         {
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
 
         }
         else if (direction.x > 0)
         {
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
         else if (direction.x < 0)
         {
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
-            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement;
         }
 
-
-        //Startpunkt 
-
-        //1. Zufällige Bewegung Weg vom STartpunkt
-
-        // 50% chance auf 2. Zufällige
-
-        //3. bewegung zurück startpunkt
-
-        // Gans soll Zum spieler rennen wenn; spieler ist nah
-
-        // spieler verfolgen bis; soso und so weit weg vom Startpunkt
-
-        // zu weitz weg; zurück zum startpunkt
-
-        // Wenn Spieler auf 10 Units rann kommt, dann l?uft die Gans auf den Spieler zu
-        if ( distance <= playerChargeThreshold && playerChaseCooldownTimer <= 0)
+        if(Time.timeScale == 1)
         {
-            myRigidbody.AddForce(direction * speed, ForceMode.VelocityChange);
-            if (distance <= 2)
+            if ( distance <= playerChargeThreshold && playerChaseCooldownTimer <= 0)
             {
-                setCooldown(true);
+                myRigidbody.AddForce(direction * speed, ForceMode.VelocityChange);
+                if (distance <= 2)
+                {
+                    setCooldown(true);
+                }
             }
-        }
-        else // Ansosten Random Movement bis Timer auf 0
-        {
-            setCooldown(false); // Cooldown runterz?hlen oder zur?cksetzen
-            setRandomDirection(); // Zuf?llige Richtung bestimmen
-            myRigidbody.AddForce(0.3f * speed * randomDirection, ForceMode.VelocityChange);
+            else // Ansosten Random Movement bis Timer auf 0
+            {
+                setCooldown(false); // Cooldown runterz?hlen oder zur?cksetzen
+                setRandomDirection(); // Zuf?llige Richtung bestimmen
+                myRigidbody.AddForce(0.3f * speed * randomDirection, ForceMode.VelocityChange);
+            }
         }
     }
 

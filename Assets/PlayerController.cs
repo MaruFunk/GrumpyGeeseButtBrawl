@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour
     public float speed; // Enhält die Geschwindigkeit vom Spielercharakter
     private Vector2 move; // Entählt unsere bewegungsrichtung (theoretisch auch einen Geschwindigkeits-Multiplikator bei einem Analog-Stick z.b.)
 
+    public float kickForce = 20f;
+
+    public int kicksToWin = 3;
+    private int friendKickCounter = 0;
+
     public float spriteFPS;
     private float spriteFPSTimer = 0f;
     private int spriteAnimationStep = 0;
@@ -19,6 +24,11 @@ public class PlayerController : MonoBehaviour
     public Sprite spriteMovement4;
     public Sprite spriteKick;
     public GameObject mySpriteComponent;
+
+    public IntroGameSequence introGameSequence;
+    public bool gameIntro = true;
+
+    public GameObject endgameScreenRef;
 
 
     Rigidbody myRigidbody;
@@ -33,13 +43,18 @@ public class PlayerController : MonoBehaviour
      */
     public void OnMove(InputAction.CallbackContext context) 
     {
-        move = context.ReadValue<Vector2>();
+        if (!gameIntro)
+            move = context.ReadValue<Vector2>();
+        else if (context.performed)
+            gameIntro = introGameSequence.nextFrame();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
+
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -140,12 +155,39 @@ public class PlayerController : MonoBehaviour
             updateSprite(2);
             print("Gans KICK!");
 
+            Vector3 kickDirection = (collision.gameObject.transform.position - transform.position);
+
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(kickForce * kickDirection, ForceMode.VelocityChange);
         }
 
         if (collision.gameObject.tag == "Freund")
         {
             updateSprite(2);
             print("You kicked your friend, you win!");
+
+
+            kickFriend(collision.gameObject);
         }
+
+        
+    }
+
+    private void kickFriend(GameObject friend)
+    {
+        Vector3 kickDirection = (friend.transform.position - transform.position);
+
+        friend.GetComponent<Rigidbody>().AddForce(kickForce * kickDirection, ForceMode.Impulse);
+
+        friend.GetComponent<AIFreund>().getKicked();
+
+        friendKickCounter++;
+
+        if(friendKickCounter >= kicksToWin)
+        {
+            Time.timeScale = 0.05f;
+
+            endgameScreenRef.SetActive(true);
+        }
+
     }
 }

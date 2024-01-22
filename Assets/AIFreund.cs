@@ -29,6 +29,7 @@ public class AIFreund : MonoBehaviour
     public Sprite spriteMovement2;
     public Sprite spriteMovement3;
     public Sprite spriteMovement4;
+    public Sprite spriteKicked;
     public GameObject mySpriteComponent;
 
 
@@ -48,44 +49,48 @@ public class AIFreund : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updateSprite();
-
         playerDistance = Vector3.Distance(transform.position, playerRef.transform.position); // Die Distanz zum Spieler
 
         // Sprite Anpassung basierend auf Bewegungsrichtung
         if (myRigidbody.velocity == Vector3.zero)
         {
+            updateSprite(0);
         }
         else if (direction.x > 0)
         {
+            updateSprite(1);
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = false;
         }
         else if (direction.x < 0)
         {
+            updateSprite(1);
             mySpriteComponent.GetComponent<SpriteRenderer>().flipX = true;
         }
 
-        // Freund Bewegungsverhalten
-        if (playerDistance <= 5) // wenn Spieler sehr Nah
+        if(Time.timeScale == 1)
         {
-            direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
-            direction.Normalize();
-            directAwayFromWall();
-            myRigidbody.AddForce(0.75f * speed * direction, ForceMode.VelocityChange);
-        }
-        else if (playerDistance <= 10) // wenn Spiele Nah
-        {
-            direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
-            direction.Normalize();
-            directAwayFromWall();
-            myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
-        }
-        else // Ansosten Random Movement
-        {
-            setRandomDirection(); // Zufällige Richtung bestimmen
-            direction.Normalize();
-            directAwayFromWall();
-            myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
+            // Freund Bewegungsverhalten
+            if (playerDistance <= 5) // wenn Spieler sehr Nah
+            {
+                direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
+                direction.Normalize();
+                directAwayFromWall();
+                myRigidbody.AddForce(0.75f * speed * direction, ForceMode.VelocityChange);
+            }
+            else if (playerDistance <= 10) // wenn Spiele Nah
+            {
+                direction = transform.position - playerRef.transform.position; // Die Richtung in welcher sich der Spieler befindet
+                direction.Normalize();
+                directAwayFromWall();
+                myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
+            }
+            else // Ansosten Random Movement
+            {
+                setRandomDirection(); // Zufällige Richtung bestimmen
+                direction.Normalize();
+                directAwayFromWall();
+                myRigidbody.AddForce(0.5f * speed * direction, ForceMode.VelocityChange);
+            }
         }
 
     }
@@ -130,37 +135,68 @@ public class AIFreund : MonoBehaviour
         }
     }
 
-    private void updateSprite()
+    private void updateSprite(int animationType)
     {
         spriteFPSTimer += Time.deltaTime;
 
+        if (animationType == 0)
+        {
+            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
+            spriteAnimationStep = 0;
+            spriteFPSTimer = 0f;
+        }
+
+        if (animationType == 2)
+        {
+            mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteKicked;
+            spriteAnimationStep = 0;
+            spriteFPSTimer = 0f;
+        }
+
         if (spriteFPSTimer >= spriteFPS)
         {
-            switch (spriteAnimationStep)
-            {
-                case 3:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement4;
-                    spriteAnimationStep = 0;
-                    break;
-                case 2:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement3;
-                    spriteAnimationStep = 3;
-                    break;
-                case 1:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement2;
-                    spriteAnimationStep = 2;
-                    break;
-                case 0:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement1;
-                    spriteAnimationStep = 1;
-                    break;
 
-                default:
-                    mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteIdle;
-                    break;
+            if (animationType == 1)
+            {
+                switch (spriteAnimationStep)
+                {
+                    case 3:
+                        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement4;
+                        spriteAnimationStep = 0;
+                        break;
+                    case 2:
+                        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement3;
+                        spriteAnimationStep = 3;
+                        break;
+                    case 1:
+                        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement2;
+                        spriteAnimationStep = 2;
+                        break;
+                    case 0:
+                        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteMovement1;
+                        spriteAnimationStep = 1;
+                        break;
+
+                }
             }
             spriteFPSTimer = 0f;
         }
 
+    }
+
+    public void getKicked()
+    {
+        StartCoroutine(kicked());
+    }
+
+    IEnumerator kicked()
+    {
+        float tmpSpeed = speed;
+        speed = 0f;
+        updateSprite(2);
+        yield return new WaitForSecondsRealtime(0.5f);
+        speed = tmpSpeed * 1.5f;
+        yield return new WaitForSecondsRealtime(1f);
+        speed = tmpSpeed;
     }
 }
