@@ -24,6 +24,7 @@ public class AIGans: MonoBehaviour
     public Sprite spriteMovement2;
     public Sprite spriteMovement3;
     public Sprite spriteMovement4;
+    public Sprite spriteKicked;
     public GameObject mySpriteComponent;
 
     Rigidbody myRigidbody;
@@ -134,6 +135,11 @@ public class AIGans: MonoBehaviour
             spriteFPSTimer = 0f;
         }
 
+    }
+    public void getKicked()
+    {
+        mySpriteComponent.GetComponent<SpriteRenderer>().sprite = spriteKicked;
+        spriteAnimationStep = 0;
     }
 
 }

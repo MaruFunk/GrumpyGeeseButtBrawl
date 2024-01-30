@@ -97,25 +97,25 @@ public class AIFreund : MonoBehaviour
     
     private void directAwayFromWall()
     {
-        if (transform.position.z >= nordWandZ - 10)
+        if (transform.position.z >= nordWandZ - 5)
         {
             direction.z = -1;
 
         }
 
-        if (transform.position.z <= (suedWandZ + 10))
+        if (transform.position.z <= (suedWandZ + 5))
         {
             direction.z = 1;
 
         }
 
-        if (transform.position.x >= (ostWandX - 10))
+        if (transform.position.x >= (ostWandX - 8))
         {
             direction.x = -1;
 
         }
 
-        if (transform.position.x <= (westWandX + 10))
+        if (transform.position.x <= (westWandX + 8))
         {
             direction.x = 1;
 

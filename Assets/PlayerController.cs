@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     public int kicksToWin = 3;
     private int friendKickCounter = 0;
+    private bool kickOnCooldown = false;
 
     public float spriteFPS;
     private float spriteFPSTimer = 0f;
@@ -46,14 +47,16 @@ public class PlayerController : MonoBehaviour
         if (!gameIntro)
             move = context.ReadValue<Vector2>();
         else if (context.performed)
+        {
             gameIntro = introGameSequence.nextFrame();
+        }
+            
     }
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
-
         Time.timeScale = 0;
     }
 
@@ -150,26 +153,32 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Gans")
+        if (!kickOnCooldown)
         {
-            updateSprite(2);
-            print("Gans KICK!");
+            if (collision.gameObject.tag == "Gans")
+            {
+                updateSprite(2);
+                print("Gans KICK!");
 
-            Vector3 kickDirection = (collision.gameObject.transform.position - transform.position);
+                Vector3 kickDirection = (collision.gameObject.transform.position - transform.position);
 
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(kickForce * kickDirection, ForceMode.VelocityChange);
+                collision.gameObject.GetComponent<Rigidbody>().AddForce(kickForce * kickDirection, ForceMode.VelocityChange);
+                collision.gameObject.GetComponent<AIGans>().getKicked();
+
+                StartCoroutine(setKickCooldown(1f));
+            }
+
+            if (collision.gameObject.tag == "Freund")
+            {
+                updateSprite(2);
+                print("You kicked your friend, you win!");
+
+
+                kickFriend(collision.gameObject);
+
+                StartCoroutine(setKickCooldown(3f));
+            }
         }
-
-        if (collision.gameObject.tag == "Freund")
-        {
-            updateSprite(2);
-            print("You kicked your friend, you win!");
-
-
-            kickFriend(collision.gameObject);
-        }
-
-        
     }
 
     private void kickFriend(GameObject friend)
@@ -182,12 +191,19 @@ public class PlayerController : MonoBehaviour
 
         friendKickCounter++;
 
-        if(friendKickCounter >= kicksToWin)
+        if (friendKickCounter >= kicksToWin)
         {
             Time.timeScale = 0.05f;
 
             endgameScreenRef.SetActive(true);
         }
 
+    }    
+    IEnumerator setKickCooldown(float seconds)
+    {
+        kickOnCooldown = true;
+        yield return new WaitForSecondsRealtime(seconds);
+        kickOnCooldown = false;
     }
+    
 }

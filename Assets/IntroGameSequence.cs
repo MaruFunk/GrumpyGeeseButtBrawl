@@ -15,6 +15,7 @@ public class IntroGameSequence : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        print("text");
     }
 
     // Update is called once per frame
@@ -66,7 +67,7 @@ public class IntroGameSequence : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.5f);
 
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
 
         Time.timeScale = 1;
     }

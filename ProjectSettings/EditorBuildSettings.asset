@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/GrumpyGeeseButtBrawl.unity
+    guid: effc949a42e759e4197fda06daf34ad1
   m_configObjects: {}
